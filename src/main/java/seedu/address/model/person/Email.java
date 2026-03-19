@@ -44,7 +44,7 @@ public class Email {
 
     /**
      * Returns if a given string is a valid email.
-     * Must match local-part@u.nus.edu.sg format.
+     * Must match local-part@u.nus.edu format.
      */
     public static boolean isValidEmail(String test) {
         if (test == null) {
