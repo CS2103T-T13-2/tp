@@ -71,7 +71,7 @@ public class MarkCommand extends Command {
                 personToMark.getEmail(),
                 personToMark.getTeleHandle(),
                 personToMark.getStudentId(),
-                personToMark.getTags(),
+                personToMark.getTutorialGroup(),
                 updatedAttendance
         );
 

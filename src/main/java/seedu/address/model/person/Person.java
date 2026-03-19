@@ -2,13 +2,9 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.tag.Tag;
 
 /**
  * Represents a Person in the address book.
@@ -24,21 +20,23 @@ public class Person {
     private final StudentId studentId;
 
     // Data fields
-    private final Set<Tag> tags = new HashSet<>();
     private final Attendance attendance;
+    private final TutorialGroup tutorialGroup;
+
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, TeleHandle teleHandle, StudentId studentId, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, teleHandle, studentId, tags);
+    public Person(Name name, Phone phone, Email email, TeleHandle teleHandle, StudentId studentId,
+                  TutorialGroup tutorialGroup) {
+        requireAllNonNull(name, phone, email, teleHandle, studentId, tutorialGroup);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.teleHandle = teleHandle;
         this.studentId = studentId;
+        this.tutorialGroup = tutorialGroup;
         this.attendance = new Attendance();
-        this.tags.addAll(tags);
     }
 
     /**
@@ -58,15 +56,15 @@ public class Person {
         Email email,
         TeleHandle teleHandle,
         StudentId studentId,
-        Set<Tag> tags, Attendance attendance) {
-        requireAllNonNull(name, phone, email, teleHandle, studentId, tags, attendance);
+        TutorialGroup tutorialGroup, Attendance attendance) {
+        requireAllNonNull(name, phone, email, teleHandle, studentId, tutorialGroup, attendance);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.teleHandle = teleHandle;
         this.studentId = studentId;
         this.attendance = attendance;
-        this.tags.addAll(tags);
+        this.tutorialGroup = tutorialGroup;
     }
 
     public Name getName() {
@@ -93,16 +91,12 @@ public class Person {
         return attendance;
     }
 
-    /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags);
+    public TutorialGroup getTutorialGroup() {
+        return tutorialGroup;
     }
 
     /**
-     * Returns true if both persons have the same name.
+     * Returns true if both persons have the same student ID.
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePerson(Person otherPerson) {
@@ -114,17 +108,12 @@ public class Person {
                 && otherPerson.getStudentId().equals(getStudentId());
     }
 
-    /**
-     * Returns true if both persons have the same identity and data fields.
-     * This defines a stronger notion of equality between two persons.
-     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof Person)) {
             return false;
         }
@@ -135,14 +124,13 @@ public class Person {
                 && email.equals(otherPerson.email)
                 && teleHandle.equals(otherPerson.teleHandle)
                 && studentId.equals(otherPerson.studentId)
-                && tags.equals(otherPerson.tags)
-                && attendance.equals(otherPerson.attendance);
+                && attendance.equals(otherPerson.attendance)
+                && tutorialGroup.equals(otherPerson.tutorialGroup);
     }
 
     @Override
     public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, teleHandle, studentId, tags);
+        return Objects.hash(name, phone, email, teleHandle, studentId, tutorialGroup);
     }
 
     @Override
@@ -153,7 +141,7 @@ public class Person {
                 .add("email", email)
                 .add("phone", phone)
                 .add("teleHandle", teleHandle)
-                .add("tags", tags)
+                .add("tutorialGroup", tutorialGroup)
                 .add("attendance", attendance)
                 .toString();
     }

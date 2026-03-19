@@ -1,10 +1,7 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,7 +14,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.StudentId;
 import seedu.address.model.person.TeleHandle;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.TutorialGroup;
 
 /**
  * Jackson-friendly version of {@link Person}.
@@ -31,7 +28,7 @@ class JsonAdaptedPerson {
     private final String email;
     private final String teleHandle;
     private final String studentId;
-    private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final String tutorialGroup;
     private final List<Boolean> attendance = new ArrayList<>();
 
     /**
@@ -40,16 +37,15 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("studentId") String studentId,
             @JsonProperty("email") String email, @JsonProperty("phone") String phone,
-            @JsonProperty("teleHandle") String teleHandle, @JsonProperty("tags") List<JsonAdaptedTag> tags,
+            @JsonProperty("teleHandle") String teleHandle,
+            @JsonProperty("tutorialGroup") String tutorialGroup,
             @JsonProperty("attendance") List<Boolean> attendance) {
         this.name = name;
         this.studentId = studentId;
         this.email = email;
         this.phone = phone;
         this.teleHandle = teleHandle;
-        if (tags != null) {
-            this.tags.addAll(tags);
-        }
+        this.tutorialGroup = tutorialGroup;
         if (attendance != null) {
             this.attendance.addAll(attendance);
         }
@@ -64,9 +60,7 @@ class JsonAdaptedPerson {
         email = source.getEmail().value;
         phone = source.getPhone().value;
         teleHandle = source.getTeleHandle().value;
-        tags.addAll(source.getTags().stream()
-                .map(JsonAdaptedTag::new)
-                .collect(Collectors.toList()));
+        tutorialGroup = source.getTutorialGroup().value;
         boolean[] attendanceRecord = source.getAttendance().getAttendanceRecord();
         for (boolean isAttended : attendanceRecord) {
             attendance.add(isAttended);
@@ -79,11 +73,6 @@ class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
-        for (JsonAdaptedTag tag : tags) {
-            personTags.add(tag.toModelType());
-        }
-
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
         }
@@ -126,7 +115,15 @@ class JsonAdaptedPerson {
         }
         final TeleHandle modelTeleHandle = new TeleHandle(teleHandle);
 
-        final Set<Tag> modelTags = new HashSet<>(personTags);
+        if (tutorialGroup == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    TutorialGroup.class.getSimpleName()));
+        }
+        if (!TutorialGroup.isValidTutorialGroup(tutorialGroup)) {
+            throw new IllegalValueException(TutorialGroup.MESSAGE_CONSTRAINTS);
+        }
+        final TutorialGroup modelTutorialGroup = new TutorialGroup(tutorialGroup);
+
 
         // Reconstruct attendance from the stored list
         Attendance modelAttendance = new Attendance();
@@ -144,7 +141,7 @@ class JsonAdaptedPerson {
             modelEmail,
             modelTeleHandle,
             modelStudentId,
-            modelTags,
+            modelTutorialGroup,
             modelAttendance);
     }
 
