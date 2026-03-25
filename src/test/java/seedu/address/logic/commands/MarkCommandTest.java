@@ -170,7 +170,7 @@ public class MarkCommandTest {
     }
 
     @Test
-    public void execute_markTutorialGroup_allAlreadyMarked_success() {
+    public void execute_markTutorialGroup_allMarked() {
         TutorialGroup t01 = new TutorialGroup("T01");
         int week = 4;
         for (Person p : model.getAddressBook().getPersonList()) {
@@ -188,7 +188,7 @@ public class MarkCommandTest {
     }
 
     @Test
-    public void execute_markTutorialGroup_noStudents_throwsCommandException() {
+    public void execute_markTutorialGroup_emptyGroup() {
         MarkCommand markCommand = new MarkCommand(new TutorialGroup("T09"), 1);
         assertCommandFailure(markCommand, model,
                 String.format(MarkCommand.MESSAGE_NO_STUDENTS_IN_GROUP, "T09"));
