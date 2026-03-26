@@ -42,7 +42,7 @@ public class Person {
 
     /**
      * Creates a Person with the specified attendance record.
-     * Every field must be present and not null.
+     * Every field must be present and not null, except {@code teleHandle} which is optional.
      * @param name the person's name
      * @param phone the person's phone number
      * @param email the person's email
