@@ -40,7 +40,7 @@ public class CommandHistoryTest {
     }
 
     @Test
-    public void next_afterPrevious_movesForward_andRestoresDraftAtEnd() {
+    public void next_afterPrevious_restoresDraft() {
         CommandHistory history = new CommandHistory();
         history.add("a");
         history.add("b");
@@ -85,7 +85,7 @@ public class CommandHistoryTest {
     }
 
     @Test
-    public void add_duringNavigation_exitsNavigation_andNewHistoryIsReachable() {
+    public void add_duringNavigation_reachesNewHistory() {
         CommandHistory history = new CommandHistory();
         history.add("a");
         history.add("b");
