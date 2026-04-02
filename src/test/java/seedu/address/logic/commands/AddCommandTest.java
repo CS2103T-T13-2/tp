@@ -54,7 +54,7 @@ public class AddCommandTest {
     }
 
     @Test
-    public void execute_duplicatePerson_sameStudentIdDifferentCase_throwsCommandException() {
+    public void execute_duplicatePerson_diffCaseStudentId() {
         Person existing = new PersonBuilder().withName("Amy").withStudentId("A0123456X").build();
         Person newPerson = new PersonBuilder().withName("Other Name").withStudentId("a0123456x").build();
         AddCommand addCommand = new AddCommand(newPerson);
