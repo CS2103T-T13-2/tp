@@ -58,7 +58,8 @@ public class EditCommand extends Command {
     public static final String MESSAGE_DUPLICATE_STUDENT_ID = "This student ID is already used by another student.";
     public static final String MESSAGE_DUPLICATE_EMAIL = "This email is already used by another student.";
     public static final String MESSAGE_DUPLICATE_PHONE = "This phone number is already used by another student.";
-    public static final String MESSAGE_DUPLICATE_TELE_HANDLE = "This Telegram handle is already used by another student.";
+    public static final String MESSAGE_DUPLICATE_TELE_HANDLE =
+            "This Telegram handle is already used by another student.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
