@@ -7,9 +7,9 @@ CLI-Tacts is a lightweight application to manage your CS2040S students! It is op
 usage (CLI)**, while having the benefits of a **Graphical User Interface (GUI)**. The best of both worlds, quickness of a CLI and visualisation of a GUI! For fast typers, CLI-Tacts helps you optimise your workflow better than traditional GUI-only grading portals.
 
 The primary users are **CS2040S Teaching Assistants** who:
-- manage multiple tutorial or lab groups concurrently
-- need to **take attendance quickly** and look up student details on the spot
-- prefer keyboard-driven workflows during lab sessions
+* manage multiple tutorial or lab groups concurrently
+* need to **take attendance quickly** and look up student details on the spot
+* prefer keyboard-driven workflows during lab sessions
 
 * Table of Contents
 {:toc}
@@ -206,7 +206,7 @@ edit INDEX [n\NAME] [i\STUDENT_ID] [e\EMAIL] [p\PHONE] [th\TELE_HANDLE] [t\TUTOR
 #### Parameters
 
 - **INDEX**: The index refers to the index number shown in the displayed student list. **Must be a positive integer** (1, 2, 3, …).
-- **NAME, STUDENT_ID, EMAIL, PHONE, TELE_HANDLE, TUTORIAL_GROUP**: Optional; use the same format and constraints as in the [`add` command](#adding-a-student-add). At least one field must be provided.
+- **NAME, STUDENT_ID, EMAIL, PHONE, TELE_HANDLE, TUTORIAL_GROUP**: Optional; use the same format and constraints as in the [`add` command's possible error](#adding-a-student-add). At least one field must be provided.
 - **Behavior**: Existing values will be updated to the input values. Omitted fields remain unchanged.
 
 #### Examples
