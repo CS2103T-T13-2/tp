@@ -110,7 +110,6 @@ public class ModelManager implements Model {
 
     @Override
     public boolean hasPersonWithTeleHandle(TeleHandle teleHandle, Person excludePerson) {
-        requireNonNull(teleHandle);
         return addressBook.hasPersonWithTeleHandle(teleHandle, excludePerson);
     }
 

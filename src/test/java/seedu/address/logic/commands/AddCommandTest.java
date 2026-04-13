@@ -240,8 +240,7 @@ public class AddCommandTest {
 
         @Override
         public boolean hasPersonWithTeleHandle(TeleHandle teleHandle, Person excludePerson) {
-            return !this.person.equals(excludePerson)
-                    && this.person.getTeleHandle().map(th -> th.equals(teleHandle)).orElse(false);
+            return !this.person.equals(excludePerson) && this.person.getTeleHandle().isPresent();
         }
     }
 
