@@ -68,10 +68,12 @@ The primary users are **CS2040S Teaching Assistants** who:
 * Items with `…`​ after them can be used multiple times including zero times.<br>
   Currently, CLI-Tacts uses a **single tutorial group** per student, so you will not see repeated `t\` prefixes.
 
-* Parameters can be in any order for `add`, `edit` , `mark`, `unmark` and `find` commands.<br>
-  e.g. if the command specifies `n\NAME p\PHONE_NUMBER`, `p\PHONE_NUMBER n\NAME` is also acceptable.
+* **Positional arguments must come first and in the specified order.**<br> `edit` and `delete` require `INDEX` as the first argument. `mark` and `unmark` accept either `INDEX` or `t/TUTORIAL_GROUP` as the first argument.<br> 
+e.g. `edit 1 n/John Doe` is valid, but `edit n/John Doe 1` is not. 
 
-* `edit` and `delete` require `INDEX`; `mark` and `unmark` can be done by `INDEX` or by `TUTORIAL_GROUP`.
+* **Prefixed arguments can be in any order** for `add`, `edit`, `mark`, `unmark` and `find` commands, *after* any required positional argument.<br> 
+e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.<br> 
+For `edit`: `edit 1 n/NAME p/PHONE_NUMBER` and `edit 1 p/PHONE_NUMBER n/NAME` are both valid.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit`, `export` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
@@ -94,7 +96,7 @@ Adds a student to CLI-Tacts. Telegram handle is optional (useful for contacting 
 
 #### Format
 ```
-add n\NAME i\STUDENT_ID e\EMAIL p\PHONE_NUMBER [th\TELE_HANDLE] t\TUTORIAL_GROUP
+add n\NAME i\STUDENT_ID e\EMAIL p\PHONE [th\TELE_HANDLE] t\TUTORIAL_GROUP
 ```
 
 #### Parameters
@@ -140,7 +142,7 @@ Example: add n\John Doe i\A0123456X e\johnd@u.nus.edu p\98765432 th\@john_doe t\
 
 **Invalid name** — If an invalid name is supplied:
 <div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
-<code>Names should only contain alphanumeric characters, spaces, hyphens, commas, apostrophes, and forward slashes. The first character must be alphanumeric.</code>
+<code>Names should only contain alphanumeric characters, spaces, forward slashes, hyphens, commas, and apostrophes. The first character must be alphanumeric. Names must be at most 54 characters long.</code>
 </div>
 
 **Invalid email** — If an invalid email is supplied:
@@ -176,7 +178,7 @@ Note: As of **2026**, the shortest allowed length is **3** digits and the longes
 
 **Duplicate student ID** — If a student with the same student ID already exists:
 <div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
-<code>This ID already exists in the address book</code>
+<code>This student ID is already used by another student.</code>
 </div>
 
 **Duplicate email** — If a student with the same email already exists:
@@ -224,12 +226,17 @@ edit INDEX [n\NAME] [i\STUDENT_ID] [e\EMAIL] [p\PHONE] [th\TELE_HANDLE] [t\TUTOR
 
 <div style="border: 1px solid #bfbfbf; border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px 0;">
 
-**Missing or invalid index**:
+**Invalid command format** — If the command is missing the index or is otherwise malformed:
 <div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
 <code>Invalid command format!<br>
 edit: Edits the details of the student identified by the index number used in the displayed student list. Existing values will be overwritten by the input values.<br>
 Parameters: INDEX (must be a positive integer) [n\NAME] [i\STUDENT_ID] [e\EMAIL] [p\PHONE] [th\TELE_HANDLE] [t\TUTORIAL_GROUP]<br>
 Example: edit 1 n\John Doe i\A0123456X e\johndoe@u.nus.edu p\91234567 th\@john_doe</code>
+</div>
+
+**Index out of bounds** — If the index is outside the valid range:
+<div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
+<code>The student index provided is invalid.</code>
 </div>
 
 **No fields provided**:
@@ -252,7 +259,12 @@ Example: edit 1 n\John Doe i\A0123456X e\johndoe@u.nus.edu p\91234567 th\@john_d
 <code>This phone number is already used by another student.</code>
 </div>
 
-**Invalid field value** — If any field value is invalid, refer to the [`add` command section](#add-possible-error-messages) for the specific constraint message.
+**Duplicate Telegram handle** — If the new Telegram handle is already used by another student:
+<div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
+<code>This Telegram handle is already used by another student.</code>
+</div>
+
+**Invalid field value** — If any field value is invalid, refer to the [`add` command section](#adding-a-student-add) for the specific constraint message.
 
 **Duplicate field prefix** — If multiple values are specified for a single-valued field (e.g., `n\John n\Doe`), refer to the corresponding error message in the [`add` command section](#add-possible-error-messages).
 
@@ -390,7 +402,7 @@ Example: delete 1</code>
 
 **Index out of bounds** — If the index is outside the valid range:
 <div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
-<code>This student's index provided is invalid.</code>
+<code>The student index provided is invalid.</code>
 </div>
 </div>
 
@@ -448,7 +460,7 @@ Example (group): mark t\ T02 w\ 2</code>
 
 **Invalid index:**
 <div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
-<code>This student's index provided is invalid.</code>
+<code>The student index provided is invalid.</code>
 </div>
 
 **Student already marked:**
@@ -458,7 +470,7 @@ Example (group): mark t\ T02 w\ 2</code>
 
 **Invalid week number:**
 <div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
-<code>Week must be a positive integer between 1 to 13.</code>
+<code>Week must be a positive integer between 1 and 13.</code>
 </div>
 
 **No students in tutorial group:**
@@ -513,17 +525,17 @@ Examples: unmark 1 w\2, unmark t\T01 w\2</code>
 
 **Invalid index:**
 <div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
-<code>This student's index provided is invalid.</code>
+<code>The student index provided is invalid.</code>
 </div>
 
 **Student already unmarked:**
 <div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
-<code>This student has already been unmarked as attended for this week.</code>
+<code>This student is already unmarked for this week.</code>
 </div>
 
 **Invalid week number:**
 <div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
-<code>Week must be a positive integer between 1 to 13.</code>
+<code>Week must be a positive integer between 1 and 13.</code>
 </div>
 
 **No students in tutorial group:**
@@ -613,9 +625,6 @@ If your changes to the data file make its format invalid, CLI-Tacts will discard
 Furthermore, certain edits can cause CLI-Tacts to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -636,7 +645,7 @@ _Details coming soon ..._
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
-3. **Index values exceeding Integer.MAX_VALUE** (2,147,483,647) will display the command format error instead of a specific index validation error.
+3. **Index values <= 0 or exceeding Integer.MAX_VALUE** (2,147,483,647) will display the command format error instead of a specific index validation error.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -644,10 +653,10 @@ _Details coming soon ..._
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n\NAME i\STUDENT_ID e\EMAIL p\PHONE_NUMBER [th\TELE_HANDLE] t\TUTORIAL_GROUP` <br> e.g., `add n\James Ho i\A0123456X e\jamesho@u.nus.edu p\22224444 th\@jamesho t\T01`
+**Add** | `add n\NAME i\STUDENT_ID e\EMAIL p\PHONE [th\TELE_HANDLE] t\TUTORIAL_GROUP` <br> e.g., `add n\James Ho i\A0123456X e\jamesho@u.nus.edu p\22224444 th\@jamesho t\T01`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n\NAME] [i\STUDENT_ID] [e\EMAIL] [p\PHONE_NUMBER] [th\TELE_HANDLE] [t\TUTORIAL_GROUP]`<br> e.g.,`edit 2 n\James Lee t\T03`
+**Edit** | `edit INDEX [n\NAME] [i\STUDENT_ID] [e\EMAIL] [p\PHONE] [th\TELE_HANDLE] [t\TUTORIAL_GROUP]`<br> e.g.,`edit 2 n\James Lee t\T03`
 **Export** | `export`
 **Find** | `find [n\NAME] [t\TUTORIAL_GROUP] [e\EMAIL] [th\TELE_HANDLE]`<br> e.g., `find n\James t\T01 e\james@u.nus.edu`
 **List** | `list`
