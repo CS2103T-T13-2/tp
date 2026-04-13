@@ -7,9 +7,12 @@ CLI-Tacts is a lightweight application to manage your CS2040S students! It is op
 usage (CLI)**, while having the benefits of a **Graphical User Interface (GUI)**. The best of both worlds, quickness of a CLI and visualisation of a GUI! For fast typers, CLI-Tacts helps you optimise your workflow better than traditional GUI-only grading portals.
 
 The primary users are **CS2040S Teaching Assistants** who:
-- manage multiple tutorial or lab groups concurrently
-- need to **take attendance quickly** and look up student details on the spot
-- prefer keyboard-driven workflows during lab sessions
+* manage multiple tutorial or lab groups concurrently
+* need to **take attendance quickly** and look up student details on the spot
+* prefer keyboard-driven workflows during lab sessions
+
+
+
 
 * Table of Contents
 {:toc}
@@ -98,21 +101,20 @@ add n\NAME i\STUDENT_ID e\EMAIL p\PHONE [th\TELE_HANDLE] t\TUTORIAL_GROUP
 
 #### Parameters
 
-- **NAME**: Should only contain alphanumeric characters, spaces, hyphens (`-`), commas (`,`), and apostrophes (`'`). The first character must be alphanumeric. Max 54 characters.
-- **STUDENT_ID**: Must start with `A` (case-insensitive), followed by 7 digits and 1 letter (e.g. `A0123456X`). Stored in uppercase.
-- **EMAIL**: Must follow NUS email format with constraints:
-  - Must be of the format `local-part@u.nus.edu` (domain is strictly `u.nus.edu`)
-  - The local-part should only contain alphanumeric characters and special characters: `+`, `_`, `.`, `-`
-  - Each special character must be surrounded by alphanumeric characters (no consecutive special characters, cannot start or end with a special character)
-  - The local-part must be at most 50 characters long
-  - Valid examples: `john.doe@u.nus.edu`, `alice+sem1@u.nus.edu`
-  - Invalid examples: `john..doe@u.nus.edu`, `.john@u.nus.edu`, `alice@gmail.com`
-- **PHONE**: Digits only, **3 to 15 digits** inclusive (e.g. `98765432`, `123`).
-  - As of **2026**, **3** is the shortest and **15** is the longest phone number length accepted.
-- **TELE_HANDLE** (optional): Must start with `@`, 5–32 characters (letters, numbers, underscores). Case-insensitive, stored in lowercase.
-- **TUTORIAL_GROUP**: **3 to 5 alphanumeric characters** (letters or digits only). Letter casing is ignored on input; the value is **stored in uppercase** (e.g. `t01` and `T01` both become `T01`).
-  - Valid: `T01`, `t01`, `CS204` ✓
-  - Invalid: `ab` (too short), `T01234` (too long), `T-01` ✗
+* **NAME**: Should only contain alphanumeric characters, spaces, hyphens (`-`), commas (`,`), apostrophes (`'`), and forward slashes (`/`). The first character must be alphanumeric. Max 54 characters.
+* **STUDENT_ID**: Must start with `A` (case-insensitive), followed by 7 digits and 1 letter (e.g. `A0123456X`). Stored in uppercase.
+* **EMAIL**: Must follow NUS email format with constraints:
+  * Must be of the format `local-part@u.nus.edu` (domain is strictly `u.nus.edu`)
+  * The local-part should only contain alphanumeric characters and special characters: `+`, `_`, `.`, `-`
+  * Each special character must be surrounded by alphanumeric characters (no consecutive special characters, cannot start or end with a special character)
+  * The local-part must be at most 50 characters long
+  * Valid examples: `john.doe@u.nus.edu`, `alice+sem1@u.nus.edu`
+  * Invalid examples: `john..doe@u.nus.edu`, `.john@u.nus.edu`, `alice@gmail.com`
+* **PHONE_NUMBER**: Digits only, **3 to 15 digits** inclusive (e.g. `98765432`, `123`).
+* **TELE_HANDLE** (optional): Must start with `@`, 5–32 characters (letters, numbers, underscores). Case-insensitive, stored in lowercase.
+* **TUTORIAL_GROUP**: **3 to 5 alphanumeric characters** (letters or digits only). Letter casing is ignored on input; the value is **stored in uppercase** (e.g. `t01` and `T01` both become `T01`).
+  * Valid: `T01`, `t01`, `CS204` ✓
+  * Invalid: `ab` (too short), `T01234` (too long), `T-01` ✗
 
 #### Examples
 
@@ -121,6 +123,7 @@ add n\NAME i\STUDENT_ID e\EMAIL p\PHONE [th\TELE_HANDLE] t\TUTORIAL_GROUP
 
 ![add command](images/addCommand.png)
 
+{: #add-possible-error-messages}
 #### Possible Error Messages
 
 <div style="border: 1px solid #bfbfbf; border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px 0;">
@@ -208,7 +211,7 @@ edit INDEX [n\NAME] [i\STUDENT_ID] [e\EMAIL] [p\PHONE] [th\TELE_HANDLE] [t\TUTOR
 #### Parameters
 
 - **INDEX**: The index refers to the index number shown in the displayed student list. **Must be a positive integer** (1, 2, 3, …).
-- **NAME, STUDENT_ID, EMAIL, PHONE, TELE_HANDLE, TUTORIAL_GROUP**: Optional; use the same format and constraints as in the [`add` command](#adding-a-student-add). At least one field must be provided.
+- **NAME, STUDENT_ID, EMAIL, PHONE, TELE_HANDLE, TUTORIAL_GROUP**: Optional; use the same format and constraints as in the [`add` command's possible error](#adding-a-student-add). At least one field must be provided.
 - **Behavior**: Existing values will be updated to the input values. Omitted fields remain unchanged.
 
 #### Examples
@@ -218,6 +221,7 @@ edit INDEX [n\NAME] [i\STUDENT_ID] [e\EMAIL] [p\PHONE] [th\TELE_HANDLE] [t\TUTOR
 
 ![edit command](images/editCommand.png)
 
+{: #edit-possible-error-messages}
 #### Possible Error Messages
 
 <div style="border: 1px solid #bfbfbf; border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px 0;">
@@ -262,7 +266,7 @@ Example: edit 1 n\John Doe i\A0123456X e\johndoe@u.nus.edu p\91234567 th\@john_d
 
 **Invalid field value** — If any field value is invalid, refer to the [`add` command section](#adding-a-student-add) for the specific constraint message.
 
-**Duplicate field prefix** — If multiple values are specified for a single-valued field (e.g., `n\John n\Doe`), refer to the corresponding error message in the [`add` command section](#adding-a-student-add).
+**Duplicate field prefix** — If multiple values are specified for a single-valued field (e.g., `n\John n\Doe`), refer to the corresponding error message in the [`add` command section](#add-possible-error-messages).
 
 </div>
 
@@ -332,6 +336,7 @@ Example after applying `find th\@ro`:
 * You can combine multiple filter types in one command to narrow results further.
   — Example: `find n\john t\T01` finds students named "john" who are also in tutorial group "T01".
 
+{: #find-possible-error-messages}
 #### Possible Error Messages
 
 <div style="border: 1px solid #bfbfbf; border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px 0;">
@@ -382,6 +387,7 @@ delete INDEX
 
 ![delete command](images/delete_success.png)
 
+{: #delete-possible-error-messages}
 #### Possible Error Messages
 
 <div style="border: 1px solid #bfbfbf; border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px 0;">
@@ -398,9 +404,6 @@ Example: delete 1</code>
 <div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
 <code>The student index provided is invalid.</code>
 </div>
-
-</div>
-
 </div>
 
 ### Marking attendance : `mark`
@@ -438,6 +441,7 @@ CLI-Tacts supports **three ways to mark attendance** for a given week (positive 
   * Applies to **every student stored** with that tutorial group, **not** only those visible after a `find`.
   * Students **already** marked for that week are **skipped** (no error).
 
+{: #mark-possible-error-messages}
 #### Possible Error Messages
 
 <div style="border: 1px solid #bfbfbf; border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px 0;">
@@ -453,37 +457,28 @@ Example (single): mark 1 w\ 2<br>
 Example (multiple): mark 1 2 3 w\ 2<br>
 Example (group): mark t\ T02 w\ 2</code>
 </div>
-</div>
 
 **Invalid index:**
-<div style="border: 1px solid #bfbfbf; border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px 0;">
 <div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
 <code>The student index provided is invalid.</code>
 </div>
-</div>
 
 **Student already marked:**
-<div style="border: 1px solid #bfbfbf; border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px 0;">
 <div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
 <code>X has already been marked as attended for week Y.</code>
 </div>
-</div>
 
 **Invalid week number:**
-<div style="border: 1px solid #bfbfbf; border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px 0;">
 <div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
 <code>Week must be a positive integer between 1 and 13.</code>
 </div>
-</div>
 
 **No students in tutorial group:**
-<div style="border: 1px solid #bfbfbf; border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px 0;">
 <div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
 <code>No students found in tutorial group X.</code>
 </div>
-</div>
 
-**Duplicate field prefix** — If multiple values are specified for a single-valued field (e.g., `w\ 1 w\ 2`), refer to the corresponding error message in the [`add` command section](#adding-a-student-add).
+**Duplicate field prefix** — If multiple values are specified for a single-valued field (e.g., `w\ 1 w\ 2`), refer to the corresponding error message in the [`add` command section](#add-possible-error-messages).
 
 </div>
 
@@ -514,6 +509,7 @@ CLI-Tacts supports **two ways to unmark attendance** for a given week (positive 
   * Applies to **every student stored** with that tutorial group, **not** only those visible after a `find`.
   * Students not marked for that week are **skipped** (no error).
 
+{: #unmark-possible-error-messages}
 #### Possible Error Messages
 
 <div style="border: 1px solid #bfbfbf; border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px 0;">
@@ -526,46 +522,35 @@ Parameters: INDEX (must be a positive integer) w\WEEK (must be a positive intege
 OR: t\TUTORIAL_GROUP w\WEEK (must be a positive integer)<br>
 Examples: unmark 1 w\2, unmark t\T01 w\2</code>
 </div>
-</div>
 
 **Invalid index:**
-<div style="border: 1px solid #bfbfbf; border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px 0;">
 <div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
 <code>The student index provided is invalid.</code>
 </div>
-</div>
 
 **Student already unmarked:**
-<div style="border: 1px solid #bfbfbf; border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px 0;">
 <div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
 <code>This student is already unmarked for this week.</code>
 </div>
-</div>
 
 **Invalid week number:**
-<div style="border: 1px solid #bfbfbf; border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px 0;">
 <div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
 <code>Week must be a positive integer between 1 and 13.</code>
 </div>
-</div>
 
 **No students in tutorial group:**
-<div style="border: 1px solid #bfbfbf; border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px 0;">
 <div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
 <code>No students found in tutorial group: X.</code>
 </div>
-</div>
 
 **All students already unmarked:**
-<div style="border: 1px solid #bfbfbf; border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px 0;">
 <div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
 <code>All students in tutorial group X are already unmarked for week Y.</code>
-</div>
 </div>
 
 **Multiple values for single-valued field:**
 
-Refer to the corresponding error message in the [`add` command section](#adding-a-student-add).
+Refer to the corresponding error message in the [`add` command section](#add-possible-error-messages).
 
 </div>
 
