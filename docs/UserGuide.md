@@ -288,6 +288,7 @@ edit INDEX [n\NAME] [i\STUDENT_ID] [e\EMAIL] [p\PHONE] [th\TELE_HANDLE] [t\TUTOR
 
 </div>
 
+<div class="keep-together" markdown="1">
 {: #edit-possible-error-messages}
 #### Possible Error Messages
 
@@ -298,6 +299,9 @@ If the command is missing the index or is otherwise malformed:
 edit: Edits the details of the student identified by the index number used in the displayed student list. Existing values will be overwritten by the input values.<br>
 Parameters: INDEX (must be a positive integer) [n\NAME] [i\STUDENT_ID] [e\EMAIL] [p\PHONE] [th\TELE_HANDLE] [t\TUTORIAL_GROUP]<br>
 Example: edit 1 n\John Doe i\A0123456X e\johndoe@u.nus.edu p\91234567 th\@john_doe</code>
+
+</div>
+
 </div>
 
 **Index out of bounds**
