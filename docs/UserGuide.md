@@ -551,10 +551,14 @@ Parameters: INDEX (must be a positive integer)<br>
 Example: delete 1</code>
 </div>
 
+<div class="keep-together" markdown="1">
+
 **Index out of bounds**
 If the index is outside the valid range:
 <div style="border: 1px solid #d9d9d9; border-radius: 6px; padding: 8px 12px; margin: 8px 0;">
 <code>The student index provided is invalid.</code>
+</div>
+
 </div>
 
 <div class="keep-together" markdown="1">
@@ -594,11 +598,15 @@ CLI-Tacts supports **three ways to mark attendance** for a given week (positive 
   * `find t\ T01` followed by `mark 1 2 w\ 3` — in the T01-filtered list, marks the 1st and 2nd students for week 3.
   * Students **already** marked for that week are **skipped** (no error). Duplicate indices are counted only once.
 
+<div class="keep-together" markdown="1">
+
 * **Tutorial group** (all students):
   * `mark t\ T02 w\ 2` — marks all students in tutorial group `T02` for week 2.
   * `mark w\ 2 t\ T02` — same as above, with prefix order reversed.
   * Applies to **every student stored** with that tutorial group, **not** only those visible after a `find`.
   * Students **already** marked for that week are **skipped** (no error).
+
+</div>
 
 {: #mark-possible-error-messages}
 #### Possible Error Messages
@@ -674,6 +682,8 @@ You cannot unmark multiple indices similar to mark, because unmark is likely for
   * Applies to **every student stored** with that tutorial group, **not** only those visible after a `find`.
   * Students not marked for that week are **skipped** (no error).
 
+<div class="keep-together" markdown="1">
+  
 {: #unmark-possible-error-messages}
 #### Possible Error Messages
 
@@ -684,6 +694,8 @@ unmark: Unmarks the student identified by the index number used in the displayed
 Parameters: INDEX (must be a positive integer) w\WEEK (must be a positive integer)<br>
 OR: t\TUTORIAL_GROUP w\WEEK (must be a positive integer)<br>
 Examples: unmark 1 w\2, unmark t\T01 w\2</code>
+</div>
+
 </div>
 
 **Invalid index:**
