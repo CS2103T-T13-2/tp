@@ -112,6 +112,8 @@ add n\NAME i\STUDENT_ID e\EMAIL p\PHONE [th\TELE_HANDLE] t\TUTORIAL_GROUP
 
 Only one occurrence of each command prefix (`n\`, `i\`, `e\`, `p\`, `th\`, `t\`) should be provided in a single command.
 
+<div class="keep-together" markdown="1">
+  
 #### Parameters
 
 * **NAME**: Should only contain alphanumeric characters, spaces, hyphens (`-`), commas (`,`), apostrophes (`'`), and forward slashes (`/`). The first character must be alphanumeric. Max 54 characters.
@@ -128,6 +130,8 @@ Only one occurrence of each command prefix (`n\`, `i\`, `e\`, `p\`, `th\`, `t\`)
 * **TUTORIAL_GROUP**: **3 to 5 alphanumeric characters** (letters or digits only). Letter casing is ignored on input; the value is **stored in uppercase** (e.g. `t01` and `T01` both become `T01`).
   * Valid: `T01`, `t01`, `CS204` ✓
   * Invalid: `ab` (too short), `T01234` (too long), `T-01` ✗
+
+</div>
 
 <div class="keep-together" markdown="1">
 
