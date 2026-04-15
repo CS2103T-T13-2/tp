@@ -387,6 +387,10 @@ At least one of `n\`, `t\`, `e\`, or `th\` must be present.
     * `find n\joh do` matches ✓ (the word "John" starts with "joh" and the word "Doe" starts with "do") 
     * `find n\jane` does not match ✗ (no word starts with "jane")
 
+</div>
+
+<div class="keep-together" markdown="1">
+
 Example after applying `find n\Ale`:
 
 ![find by name filter](images/findAle.png)
